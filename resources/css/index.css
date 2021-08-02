@@ -1,0 +1,65 @@
+#MainBox {
+    position: relative;
+    top: 50px;
+    margin:auto;
+    width: 70%;
+}
+#typingBox {
+    position: relative;
+    top: 0px;
+    margin:auto;
+    height: 500px;
+    word-wrap: break-word;
+    background-color: antiquewhite;
+}
+#cpmText {
+    width: 50%;
+    text-align: center;
+    font-size: 37px;
+    margin: 0 auto;
+    background-color: rgb(184, 179, 174);
+    color: white;
+    font-weight: bold;
+}
+
+.typingText {
+    margin: 0;
+    font-size: 30px;
+}
+
+#textTyped {
+    color: black;
+}
+
+#textToType {
+    color: rgb(109, 109, 109);
+}
+
+#languageSelector {
+    position: absolute;
+    top: 0;
+    left:-21%;
+    width: 20%;
+    height: 100%;
+}
+.codingLanguage {
+    margin: 5px 0;
+    background-color: rgb(170, 170, 170);
+    color:black;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+}
+
+.selectedLanguage {
+    border: 2px solid black;
+}
+
+#textHighlightor {
+    position: absolute;
+    display: inline;
+    background-color: black;
+    width: 2px;
+    height: 30px;
+    margin-top: 3px;
+}
