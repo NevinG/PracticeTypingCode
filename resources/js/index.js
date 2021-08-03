@@ -1,5 +1,5 @@
 let textTyped = "";
-let textToType = "testing this right now! Here is alot of text to practice with okay! If you cant practice this right then its a no go for all of us okay!";
+let textToType = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 const textTypedElement = document.getElementById('textTyped');
 const textToTypeElement = document.getElementById('textToType');
