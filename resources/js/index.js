@@ -1,17 +1,22 @@
 let textTyped = "";
-let textToType = "if(yourMom === true)\{_n_tscale = broken\;_n\}_nelse\{_n_tconsole.log(\"hi\")\;_n\}";
+let allText = [
+    "public class CopyBytes {_n_tpublic static void main(String[] args) throws IOException }_n_n_t_tFileInputStream in = null;_n_t_tFileOutputStream out = null;_n_n_ttry {_n_t_t_tin = new FileInputStream(\"xanadu.txt\");_n_t_t_tout = new FileOutputStream(\"outagain.txt\");_n_t_t_tint c;_n_n_t_t_twhile ((c = in.read()) != -1) {_n_t_t_t_tout.write(c);_n_t_t_t}_n_t_t} finally {_n_t_t_tif (int != null) {_n_t_t_t_tin.close();_n_t_t_t}_n_t_t_tif (out != null) {_n_t_t_t_tout.close();_n_t_t_t}_n_t_t}_n_t}_n}",
+    "class helloWorldApp {_n_tpublic static void main(String[] args) {_n_t_tSystem.out.println(\"Hello World\");_n_t}_n}",
+]
+let textToType = allText[Math.floor(Math.random() * allText.length)];
 
 const textwpmElement = document.getElementById('wpmText');
 const typingText = document.getElementById('typingText');
 let startTime;
 let wpm = 0;
-
 let letters = [];
 let typedLetters = [];
 let index = 0;
 let inputs = [] //array of all inputs needed to type the code
 let correctCharactersTyped = 0;
 let blinkInterval;
+
+let collapseTabs = true;
 
 const generateInputs = () => {
     for(let i = 0; i < textToType.length; i++) {
@@ -57,13 +62,14 @@ const writeText = () => {
                 c.id = 'tabIcon';
                 c.src = "resources/images/tabIcon.svg";
                 b.appendChild(c);
-                typingText.appendChild(b);
-                letters.push(b);
+                
 
                 let a = document.createElement('span');
                 a.innerHTML = '____';
                 a.classList.add('space');
+                a.appendChild(b);
                 typingText.appendChild(a);
+                letters.push(a);
                 i++;
                 continue;
             }
@@ -79,8 +85,29 @@ const writeText = () => {
         
         let a = document.createElement('span');
         a.innerHTML = textToType[i];
+        a.classList.add('codeCharacter');
         typingText.appendChild(a);
         letters.push(a);
+    }
+}
+
+const removeKey = () => {
+    correctCharactersTyped++;
+    inputs.shift();
+    typedLetters.unshift(letters[0]);
+    letters.shift();
+    removeCursor();
+    if(inputs.length > 0) {
+    addCursor();
+    }
+    if(!typedLetters[0].classList.contains('space')){
+        typedLetters[0].style.color = "gray";
+    }
+    if(typedLetters[0].id === 'enterIconContainer') {
+        typedLetters[0].style.display = 'none';
+    }
+    if(typedLetters[0].children[0] && typedLetters[0].children[0].id == 'tabIconContainer'){
+        typedLetters[0].children[0].style.display = 'none';
     }
 }
 
@@ -89,20 +116,14 @@ const logKey = (keyEvent) => {
         keyEvent.preventDefault();
     }
     if(keyEvent.key == inputs[0]) {
-        correctCharactersTyped++;
-        inputs.shift();
-        typedLetters.unshift(letters[0]);
-        letters.shift();
-        removeCursor();
-        if(inputs.length > 0) {
-        addCursor();
+        if(collapseTabs && inputs[0] =='Tab') {
+            while(inputs[0] == 'Tab') {
+                removeKey();
+            }
+        } else {
+            removeKey();
         }
-        if(typedLetters[0].innerHTML !== '_'){
-            typedLetters[0].style.color = "gray";
-        }
-        if(typedLetters[0].id === 'tabIconContainer'|| typedLetters[0].id === 'enterIconContainer') {
-            typedLetters[0].style.display = 'none';
-        }
+        
         //start counting wpm
         if(!startTime) {
             startTime = Date.now();
@@ -132,13 +153,15 @@ const removeCursor = () => {
 
 const blinkCursor = () => {
     let blinker = document.getElementById('blinker');
-    if(bliner && blinker.style.display == 'none') {
+    if(blinker && blinker.style.display == 'none') {
         blinker.style.display = 'inline';
     } else if (blinker){
         blinker.style.display = 'none';
     }
 }
-
+document.getElementById('collapseTabs').addEventListener('click', () => {
+    collapseTabs = document.getElementById('collapseTabs').checked;
+});
 document.addEventListener('keydown', logKey);
 setInterval(updateLoop,1000/5);
 blinkInterval = setInterval(blinkCursor,1000/2);
