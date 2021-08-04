@@ -1,61 +1,119 @@
 let textTyped = "";
-let textToType = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+let textToType = "if(yourMom === true)\{_n_tscale = broken\;_n\}";
 
-const textTypedElement = document.getElementById('textTyped');
-const textToTypeElement = document.getElementById('textToType');
-const textHighlightorElement = document.getElementById('textHighlightor');
 const textcpmElement = document.getElementById('cpmText');
-
-let blinkHighlightorCooldown = false;
+const typingText = document.getElementById('typingText');
 let startTime;
 let cpm = 0;
 
-const updateText = () => {
-    textTypedElement.innerHTML = textTyped;
-    if(textToType[0] === " "){
-        textToTypeElement.innerHTML = "&nbsp;" + textToType.substring(1);
-    } else {
-        textToTypeElement.innerHTML = textToType;
+let letters = [];
+let index = 0;
+let inputs = [] //array of all inputs needed to type the code
+let correctCharactersTyped = 0;
+let blinkerElement;
+
+const generateInputs = () => {
+    for(let i = 0; i < textToType.length; i++) {
+        if(textToType[i] == '_') {//new line
+            if(textToType[i+1] == 'n') {
+                inputs.push('Enter');
+                i++;
+            } else if(textToType[i+1] == 't') {
+                inputs.push('Tab');
+                i++;
+            }
+        } else {
+            inputs.push(textToType[i]);
+        }
+    }
+}
+
+const writeText = () => {
+    for(let i = 0; i< textToType.length; i++ ){
+        if(textToType[i] == '_') {//new line
+            if(textToType[i+1] == 'n') {
+                let a = document.createElement('br');
+                typingText.appendChild(a);
+                letters.push(a);
+                i++;
+                continue;
+            }
+        }
+        if(textToType[i] == '_') {//tab
+            if(textToType[i+1] == 't') {
+                let a = document.createElement('span');
+                a.innerHTML = '____';
+                a.classList.add('space');
+                typingText.appendChild(a);
+                letters.push(a);
+                i++;
+                continue;
+            }
+        }
+        if(textToType[i] == ' ') {//space
+            let a = document.createElement('span');
+            a.innerHTML = '_';
+            a.classList.add('space');
+            typingText.appendChild(a);
+            letters.push(a);
+            continue;
+        }
+        
+        let a = document.createElement('span');
+        a.innerHTML = textToType[i];
+        typingText.appendChild(a);
+        letters.push(a);
     }
 }
 
 const logKey = (keyEvent) => {
-    if(keyEvent.key === textToType[0]) {
-        textTyped += textToType[0];
-        textToType = textToType.substring(1);
-        updateText();
+    if(keyEvent.key == 'Tab'){ //prevents tab from tabbing to the tab bar of the screen
+        keyEvent.preventDefault();
     }
-
-    textHighlightorElement.style.display = 'inline';
-    blinkHighlightorCooldown = true;
-    clearTimeout();
-    setTimeout(() => blinkHighlightorCooldown = false, 1000);
-
-    if(!startTime) {
-        startTime = Date.now();
-    }
-}
-
-const blinkTextHighlightor = () => {
-    if(blinkHighlightorCooldown) return;
-
-    if(textHighlightorElement.style.display === 'none') {
-        textHighlightorElement.style.display = 'inline';
-    } else {
-        textHighlightorElement.style.display = 'none';
+    if(keyEvent.key == inputs[0]) {
+        correctCharactersTyped++;
+        inputs.shift();
+        letters.shift();
+        removeCursor();
+        addCursor();
+        //start counting wpm
+        if(!startTime) {
+            startTime = Date.now();
+        }
     }
 }
 
 const updateLoop = () => {
     //update cpm text
-    if(startTime && textToType.length > 0) {
-        cpm = Math.floor((60/((Date.now()-startTime)/1000)) * textTyped.length / 5);
+    if(startTime && inputs.length > 0) {
+        cpm = Math.floor((60/((Date.now()-startTime)/1000)) * correctCharactersTyped / 5);
         textcpmElement.innerHTML = "Words Per Minute: " + cpm;
     }
 }
 
+const addCursor = () => {
+    let blinker = document.createElement('span');
+    blinker.id = "blinker";
+    letters[0].prepend(blinker);
+}
+
+const removeCursor = () => {
+    document.getElementById("blinker").remove();
+}
+
+const blinkCursor = () => {
+    let blinker = document.getElementById('blinker');
+    if(blinker.style.display == 'none') {
+        blinker.style.display = 'inline';
+    } else {
+        blinker.style.display = 'none';
+    }
+}
+
 document.addEventListener('keydown', logKey);
-setInterval(blinkTextHighlightor,500);
 setInterval(updateLoop,1000/5);
-updateText();
+setInterval(blinkCursor,1000/2);
+writeText();
+generateInputs();
+addCursor();
 

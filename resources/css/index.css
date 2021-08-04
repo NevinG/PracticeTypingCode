@@ -23,19 +23,7 @@
 }
 body {
     background-color: #252525;
-    font-family: 'Fira Code', monospace;
-}
-.typingText {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-#textTyped {
-    color: gray;
-}
-
-#textToType {
-    color: white;
+    font-family: 'Anonymous Pro', 'Courier Prime', monospace;
 }
 
 #languageSelector {
@@ -57,11 +45,19 @@ body {
     border: 2px solid white;
 }
 
-#textHighlightor {
+.space {
+    color: #252525;
+}
+
+#blinker {
+    width: .2rem;
     position: absolute;
-    display: inline;
-    background-color: black;
-    width: 2px;
-    height: 30px;
-    margin-top: 3px;
+    height: 2rem;
+    background-color: white;
+}
+
+#typingText {
+    text-align: left;
+    font-size: 2rem;
+    color: white;
 }
