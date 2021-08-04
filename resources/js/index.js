@@ -2,6 +2,7 @@ let textTyped = "";
 let allText = [
     "public class CopyBytes {_n_tpublic static void main(String[] args) throws IOException }_n_n_t_tFileInputStream in = null;_n_t_tFileOutputStream out = null;_n_n_ttry {_n_t_t_tin = new FileInputStream(\"xanadu.txt\");_n_t_t_tout = new FileOutputStream(\"outagain.txt\");_n_t_t_tint c;_n_n_t_t_twhile ((c = in.read()) != -1) {_n_t_t_t_tout.write(c);_n_t_t_t}_n_t_t} finally {_n_t_t_tif (int != null) {_n_t_t_t_tin.close();_n_t_t_t}_n_t_t_tif (out != null) {_n_t_t_t_tout.close();_n_t_t_t}_n_t_t}_n_t}_n}",
     "class helloWorldApp {_n_tpublic static void main(String[] args) {_n_t_tSystem.out.println(\"Hello World\");_n_t}_n}",
+    "class Main {_n_tpublic static void main(String[] args) {_n_n_tint weeks = 3;_n_tint days = 7;_n_n_t_tfor (int i = 1; i <= weeks;i++) {_n_t_t_tSystem.out.println(\"Week: \" + i);_n_n_t_t_tfor (int j = 1; j <= days; j++) {_n_t_t_t_tSystem.out.println(\" Day: \" + j);_n_t_t_t}_n_t_t}_n_t}_n}"
 ]
 let textToType = allText[Math.floor(Math.random() * allText.length)];
 
