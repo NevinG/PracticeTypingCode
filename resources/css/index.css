@@ -78,3 +78,8 @@ body {
     top: -1px;
     width: 2rem;
 }
+#tabIcon {
+    position: relative;
+    display: inline;
+    width: 3rem;
+}

@@ -54,7 +54,7 @@ const writeText = () => {
                 let b = document.createElement('div');
                 b.id = 'tabIconContainer';
                 let c = document.createElement('img');
-                c.id = 'enterIcon';
+                c.id = 'tabIcon';
                 c.src = "resources/images/tabIcon.svg";
                 b.appendChild(c);
                 typingText.appendChild(b);
@@ -132,9 +132,9 @@ const removeCursor = () => {
 
 const blinkCursor = () => {
     let blinker = document.getElementById('blinker');
-    if(blinker.style.display == 'none') {
+    if(bliner && blinker.style.display == 'none') {
         blinker.style.display = 'inline';
-    } else {
+    } else if (blinker){
         blinker.style.display = 'none';
     }
 }
