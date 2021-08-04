@@ -13,17 +13,18 @@
     border: 1px solid white;
     padding: 5px;
 }
-#cpmText {
+#wpmText {
     width: 50%;
     text-align: center;
     font-size: 2rem;
     margin: 0 auto;
     color: white;
-    font-weight: bold;
+    font-weight: normal;
 }
 body {
     background-color: #252525;
     font-family: 'Anonymous Pro', 'Courier Prime', monospace;
+    font-weight: normal;
 }
 
 #languageSelector {
@@ -36,7 +37,7 @@ body {
 .codingLanguage {
     margin: 5px 0;
     color: white;
-    font-weight: bold;
+    font-weight: normal;
     text-align: center;
     font-size: 1.5rem;
 }
@@ -60,4 +61,20 @@ body {
     text-align: left;
     font-size: 2rem;
     color: white;
+}
+#enterIconContainer {
+    display: inline-block;
+    width: fit-content;
+}
+#tabIconContainer {
+    display: inline-block;
+    width: fit-content;
+    position: absolute;
+    left: 1rem;
+}
+#enterIcon {
+    position: relative;
+    display: inline;
+    top: -1px;
+    width: 2rem;
 }

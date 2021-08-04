@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="220.77736"
+   height="116.00782"
+   viewBox="0 0 58.414008 30.693737"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="enterIcon.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview11"
+     showgrid="false"
+     inkscape:zoom="0.84874327"
+     inkscape:cx="137.18492"
+     inkscape:cy="93.458141"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="translate(-53.28951,-69.890824)">
+    <path
+       id="rect833"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:2.3825"
+       d="m 101.01218,74.864679 v 9.325014 H 72.910536 v -6.261118 l -9.810255,5.663737 -9.810771,5.664255 9.810771,5.664253 9.810255,5.66374 v -5.704047 h 35.201984 c 1.98941,0 3.591,-1.601581 3.591,-3.590996 V 74.864679 c 0,-2.755532 -2.21832,-4.973855 -5.34541,-4.973855 -3.12709,0 -5.34593,2.218323 -5.34593,4.973855 z" />
+  </g>
+</svg>
