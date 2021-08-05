@@ -111,7 +111,7 @@ const removeKey = (index) => {
         removedLetter.children[0].style.display = 'none';
     }
 
-    if(collapseTabs && removedInput === '}') {
+    if(autoFill && removedInput === '}') {
         //remove all tabs and enters on the same line
         //get all letters to the left of the bracker
         let i = index - 1;
