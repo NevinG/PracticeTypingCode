@@ -1,6 +1,6 @@
 let textTyped = "";
 let allText = [
-    "public class CopyBytes {_n_tpublic static void main(String[] args) throws IOException }_n_n_t_tFileInputStream in = null;_n_t_tFileOutputStream out = null;_n_n_ttry {_n_t_t_tin = new FileInputStream(\"xanadu.txt\");_n_t_t_tout = new FileOutputStream(\"outagain.txt\");_n_t_t_tint c;_n_n_t_t_twhile ((c = in.read()) != -1) {_n_t_t_t_tout.write(c);_n_t_t_t}_n_t_t} finally {_n_t_t_tif (int != null) {_n_t_t_t_tin.close();_n_t_t_t}_n_t_t_tif (out != null) {_n_t_t_t_tout.close();_n_t_t_t}_n_t_t}_n_t}_n}",
+    "public class CopyBytes {_n_tpublic static void main(String[] args) throws IOException {_n_n_t_tFileInputStream in = null;_n_t_tFileOutputStream out = null;_n_n_ttry {_n_t_t_tin = new FileInputStream(\"xanadu.txt\");_n_t_t_tout = new FileOutputStream(\"outagain.txt\");_n_t_t_tint c;_n_n_t_t_twhile ((c = in.read()) != -1) {_n_t_t_t_tout.write(c);_n_t_t_t}_n_t_t} finally {_n_t_t_tif (int != null) {_n_t_t_t_tin.close();_n_t_t_t}_n_t_t_tif (out != null) {_n_t_t_t_tout.close();_n_t_t_t}_n_t_t}_n_t}_n}",
     "class helloWorldApp {_n_tpublic static void main(String[] args) {_n_t_tSystem.out.println(\"Hello World\");_n_t}_n}",
     "class Main {_n_tpublic static void main(String[] args) {_n_n_tint weeks = 3;_n_tint days = 7;_n_n_t_tfor (int i = 1; i <= weeks;i++) {_n_t_t_tSystem.out.println(\"Week: \" + i);_n_n_t_t_tfor (int j = 1; j <= days; j++) {_n_t_t_t_tSystem.out.println(\" Day: \" + j);_n_t_t_t}_n_t_t}_n_t}_n}"
 ]
@@ -18,6 +18,7 @@ let correctCharactersTyped = 0;
 let blinkInterval;
 
 let collapseTabs = true;
+let autoFill = false;
 
 const generateInputs = () => {
     for(let i = 0; i < textToType.length; i++) {
@@ -91,24 +92,55 @@ const writeText = () => {
         letters.push(a);
     }
 }
-
-const removeKey = () => {
+const removeKey = (index) => {
     correctCharactersTyped++;
-    inputs.shift();
-    typedLetters.unshift(letters[0]);
-    letters.shift();
+    let removedInput = inputs.splice(index,1)[0];
+    typedLetters.unshift(letters[index]);
+    let removedLetter = letters.splice(index,1)[0];
     removeCursor();
     if(inputs.length > 0) {
     addCursor();
     }
-    if(!typedLetters[0].classList.contains('space')){
-        typedLetters[0].style.color = "gray";
+    if(!removedLetter.classList.contains('space')){
+        removedLetter.style.color = "gray";
     }
-    if(typedLetters[0].id === 'enterIconContainer') {
-        typedLetters[0].style.display = 'none';
+    if(removedLetter.id === 'enterIconContainer') {
+        removedLetter.style.display = 'none';
     }
-    if(typedLetters[0].children[0] && typedLetters[0].children[0].id == 'tabIconContainer'){
-        typedLetters[0].children[0].style.display = 'none';
+    if(removedLetter.children[0] && removedLetter.children[0].id == 'tabIconContainer'){
+        removedLetter.children[0].style.display = 'none';
+    }
+
+    if(collapseTabs && removedInput === '}') {
+        //remove all tabs and enters on the same line
+        //get all letters to the left of the bracker
+        let i = index - 1;
+        while(inputs[i] != 'Enter' && i >=0 ) {
+            if(inputs[i] == 'Tab') {
+                removeKey(i);
+            }
+            i--;
+        }
+
+        //remove enter after it
+        if(inputs[i+1] == 'Enter') {
+            removeKey(i+1);
+        }
+    }
+}
+
+const typeBracket = () => {
+    let openBracketCount = 1;
+    for(let i = 1; i < inputs.length; i++) {
+        if(inputs[i] == '}') {
+            openBracketCount--;
+            if(openBracketCount === 0) {
+                removeKey(i);
+            }
+        }
+        if(inputs[i] == '{') {
+            openBracketCount++;
+        }
     }
 }
 
@@ -118,11 +150,14 @@ const logKey = (keyEvent) => {
     }
     if(keyEvent.key == inputs[0]) {
         if(collapseTabs && inputs[0] =='Tab') {
-            while(inputs[0] == 'Tab') {
-                removeKey();
+            while(inputs.length > 0 && inputs[0] == 'Tab') {
+                removeKey(0);
             }
-        } else {
-            removeKey();
+        } else if(autoFill && inputs[0] == '\{') {
+            typeBracket();
+            removeKey(0)
+        }else {
+            removeKey(0);
         }
         
         //start counting wpm
@@ -162,6 +197,9 @@ const blinkCursor = () => {
 }
 document.getElementById('collapseTabs').addEventListener('click', () => {
     collapseTabs = document.getElementById('collapseTabs').checked;
+});
+document.getElementById('autoFill').addEventListener('click', () => {
+    autoFill = document.getElementById('autoFill').checked;
 });
 document.addEventListener('keydown', logKey);
 setInterval(updateLoop,1000/5);
