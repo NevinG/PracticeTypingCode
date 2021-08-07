@@ -16,16 +16,26 @@
 #wpmText {
     width: 50%;
     text-align: center;
-    font-size: 2rem;
     margin: 0 auto;
-    color: white;
-    font-weight: normal;
 }
 body {
     background-color: #252525;
     font-family: 'Anonymous Pro', 'Courier Prime', monospace;
     font-weight: normal;
     color: white;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: normal;
+    color: white;
+}
+
+#characterTypingBox {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
 }
 
 #languageSelector {
@@ -91,4 +101,29 @@ body {
     position: relative;
     left: -5px;
     width: 1.5rem;
+}
+
+#characterToType {
+    font-size: 5rem;
+    display: block;
+    text-align: center;
+}
+
+/* Organized from here down */
+nav {
+    background-color: rgb(92, 92, 92);
+    height: 2rem;
+}
+
+nav a {
+    box-sizing: border-box;
+    display: inline-block;
+    height: 100%;
+    padding: 7px 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.selectedNav {
+    background-color: #252525;
 }
