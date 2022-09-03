@@ -1,10 +1,24 @@
 let textTyped = "";
-let allText = [
+let javaText = [
     "public class CopyBytes {_n_tpublic static void main(String[] args) throws IOException {_n_n_t_tFileInputStream in = null;_n_t_tFileOutputStream out = null;_n_n_ttry {_n_t_t_tin = new FileInputStream(\"xanadu.txt\");_n_t_t_tout = new FileOutputStream(\"outagain.txt\");_n_t_t_tint c;_n_n_t_t_twhile ((c = in.read()) != -1) {_n_t_t_t_tout.write(c);_n_t_t_t}_n_t_t} finally {_n_t_t_tif (int != null) {_n_t_t_t_tin.close();_n_t_t_t}_n_t_t_tif (out != null) {_n_t_t_t_tout.close();_n_t_t_t}_n_t_t}_n_t}_n}",
     "class helloWorldApp {_n_tpublic static void main(String[] args) {_n_t_tSystem.out.println(\"Hello World\");_n_t}_n}",
-    "class Main {_n_tpublic static void main(String[] args) {_n_n_tint weeks = 3;_n_tint days = 7;_n_n_t_tfor (int i = 1; i <= weeks;i++) {_n_t_t_tSystem.out.println(\"Week: \" + i);_n_n_t_t_tfor (int j = 1; j <= days; j++) {_n_t_t_t_tSystem.out.println(\" Day: \" + j);_n_t_t_t}_n_t_t}_n_t}_n}"
+    "class Main {_n_tpublic static void main(String[] args) {_n_n_tint weeks = 3;_n_tint days = 7;_n_n_t_tfor (int i = 1; i <= weeks;i++) {_n_t_t_tSystem.out.println(\"Week: \" + i);_n_n_t_t_tfor (int j = 1; j <= days; j++) {_n_t_t_t_tSystem.out.println(\" Day: \" + j);_n_t_t_t}_n_t_t}_n_t}_n}",
+    "public class Main {_n_tpublic static void main(String[] args) {_n_t_tSystem.out.println(\"This will be printed\");_n_t}_n}",
+    "boolean b = false;_nb = true;_n_nboolean toBe = false;_nb = toBe || !toBe;_nif (b) {_n_tSystem.out.println(toBe);_n}_n_nint children = 0;_nb = children;_nif (children) {_n}_n_nint a;_nboolean b = true;_nboolean c = false;_na = b + c;_nSystem.out.println(a);",
+    "int a = 4;_nboolean b = a == 4;_n_nif (b) {_n_tSystem.out.println(\"It's true!\");_n}",
+    "String a = new String(\"Wow\");_nString b = new String(\"Wow\");_nString sameA = a;_n_nboolean r1 = a == b;_nboolean r2 = a.equals(b);_nboolean r3 = a == sameA;",
+    "for (int i=0; i < arr.length; i++) {_n_tSystem.out.println(arr[i]);_n}",
+    "int[] arr = {1, 9, 9, 5};_nfor (int i = 0; i < arr.length; i++) {_n_tint el = arr[i];_n_tSystem.out.println(el);_n}",
+    "public class Student {_n_tprivate String name;_n_tpublic String getName() {_n_t_treturn name;_n_t}_n_tpublic void setName(String name) {_n_t_tthis.name = name;_n_t}_n}"
 ]
-let textToType = allText[Math.floor(Math.random() * allText.length)];
+
+let pythonText = ["if x < 0:_n_tx = 0_n_tprint('Negative changed to zero')_nelif x == 0:_n_tprint('Zero')_nelif x == 1:_n_tprint('Single')_nelse:_n_tprint('More')",
+
+]
+
+let chosenText = pythonText;
+let textToType = javaText[Math.floor(Math.random() * chosenText.length)];
+textToType = chosenText[chosenText.length-1]; //temorary for testing purposes
 
 const textwpmElement = document.getElementById('wpmText');
 const typingText = document.getElementById('typingText');
@@ -16,6 +30,9 @@ let index = 0;
 let inputs = [] //array of all inputs needed to type the code
 let correctCharactersTyped = 0;
 let blinkInterval;
+let shiftKeyDown = false;
+let enterKeyDown = false;
+
 
 let collapseTabs = true;
 let autoFill = false;
@@ -165,6 +182,53 @@ const logKey = (keyEvent) => {
             startTime = Date.now();
         }
     }
+
+    //restart test when you hit shift enter
+    if(keyEvent.key == 'Shift'){
+        shiftKeyDown = true;
+    }
+    if(keyEvent.key == 'Enter'){
+        enterKeyDown = true;
+    }
+
+    if(shiftKeyDown && enterKeyDown){
+        resetTypingTest();
+    }    
+    
+    //give new inputs if finished with previous test
+    if(inputs.length == 0 && keyEvent.key == 'Enter'){
+        resetTypingTest();
+    }
+}
+
+const logKeyUp = (keyEvent) => {
+    if(keyEvent.key == 'Shift'){
+        shiftKeyDown = false;
+    }
+    if(keyEvent.key == 'Enter'){
+        enterKeyDown = false;
+    }
+}
+
+const resetTypingTest = () => {
+    textToType = chosenText[Math.floor(Math.random() * chosenText.length)];
+    startTime = null;
+    wpm = 0;
+    letters = [];
+    typedLetters = [];
+    index = 0;
+    inputs = [] //array of all inputs needed to type the code
+    correctCharactersTyped = 0;
+
+    while (typingText.firstChild) {
+        typingText.removeChild(typingText.firstChild);
+    }
+
+    setInterval(updateLoop,1000/5);
+    blinkInterval = setInterval(blinkCursor,1000/2);
+    writeText();
+    generateInputs();
+    addCursor();
 }
 
 const updateLoop = () => {
@@ -174,6 +238,7 @@ const updateLoop = () => {
         textwpmElement.innerHTML = "Words Per Minute: " + wpm;
     } else if(inputs.length == 0) {
         clearInterval(blinkInterval);
+        clearInterval(updateLoop);
     }
 }
 
@@ -202,6 +267,8 @@ document.getElementById('autoFill').addEventListener('click', () => {
     autoFill = document.getElementById('autoFill').checked;
 });
 document.addEventListener('keydown', logKey);
+document.addEventListener('keyup', logKeyUp);
+
 setInterval(updateLoop,1000/5);
 blinkInterval = setInterval(blinkCursor,1000/2);
 writeText();

@@ -1,0 +1,1 @@
+if x < 0:_n_tx = 0_n_tprint('Negative changed to zero')_nelif x == 0:_n_tprint('Zero')_nelif x == 1:_n_tprint('Single')_nelse:_n_tprint('More')
