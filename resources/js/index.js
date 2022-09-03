@@ -12,13 +12,59 @@ let javaText = [
     "public class Student {_n_tprivate String name;_n_tpublic String getName() {_n_t_treturn name;_n_t}_n_tpublic void setName(String name) {_n_t_tthis.name = name;_n_t}_n}"
 ]
 
-let pythonText = ["if x < 0:_n_tx = 0_n_tprint('Negative changed to zero')_nelif x == 0:_n_tprint('Zero')_nelif x == 1:_n_tprint('Single')_nelse:_n_tprint('More')",
-
+let pythonText = [
+    "if x < 0:_n_tx = 0_n_tprint('Negative changed to zero')_nelif x == 0:_n_tprint('Zero')_nelif x == 1:_n_tprint('Single')_nelse:_n_tprint('More')",
+    "stack = [3, 4, 5]_nstack.append(6)_nstack.append(7)_nstack.pop()_n_n",
+    "knights = {'gallahad': 'the pure', 'robin': 'the brave'}_nfor k, v in knights.items():_n_tprint(k, v)",
+    "questions = ['name', 'quest', 'favorite color']_nanswers = ['lancelot', 'the holy grail', 'blue']_nfor q, a in zip(questions, answers):_n_tprint('What is your {0}?  It is {1}.'.format(q, a))",
+    "def fib(n):_n_ta, b = 0, 1_n_twhile a < n:_n_t_tprint(a, end=' ')_n_t_ta, b = b, a+b_n_tprint()_n_ndef fib2(n):_n_tresult = []_n_ta, b = 0, 1_n_twhile a < n:_n_t_tresult.append(a)_n_t_ta, b = b, a+b_n_treturn result",
+    "class Warehouse:_n   purpose = 'storage'_n   region = 'west'_n_nw1 = Warehouse()_nprint(w1.purpose, w1.region)_nw2 = Warehouse()_nw2.region = 'east'_nprint(w2.purpose, w2.region)",
+    "class Mapping:_n_tdef __init__(self, iterable):_n_t_tself.items_list = []_n_t_tself.update(iterable)_n_n_tdef update(self, iterable):_n_t_tfor item in iterable:_n_t_t_tself.items_list.append(item)"
 ]
+let cppText = { //need to fill out later
 
-let chosenText = pythonText;
+}
+let cSharpText = { //need to fill out later
+
+}
+
+let chosenText = javaText;
 let textToType = javaText[Math.floor(Math.random() * chosenText.length)];
-textToType = chosenText[chosenText.length-1]; //temorary for testing purposes
+
+let pythonSelector = document.getElementById('python');
+let javaSelector = document.getElementById('java');
+let cSharpSelector = document.getElementById('cSharp');
+let cppSelector = document.getElementById('cpp');
+
+pythonSelector.onclick = () => {
+    chosenText = pythonText;
+    pythonSelector.classList.add('selectedLanguage');
+    javaSelector.classList.remove('selectedLanguage');
+    cSharpSelector.classList.remove('selectedLanguage');
+    cppSelector.classList.remove('selectedLanguage');
+}
+javaSelector.onclick = () => {
+    chosenText = javaText;
+    pythonSelector.classList.remove('selectedLanguage');
+    javaSelector.classList.add('selectedLanguage');
+    cSharpSelector.classList.remove('selectedLanguage');
+    cppSelector.classList.remove('selectedLanguage');
+}
+cSharpSelector.onclick = () => {
+    chosenText = cSharpText;
+    pythonSelector.classList.remove('selectedLanguage');
+    javaSelector.classList.remove('selectedLanguage');
+    cSharpSelector.classList.add('selectedLanguage');
+    cppSelector.classList.remove('selectedLanguage');
+}
+cppSelector.onclick = () => {
+    chosenText = cppText;
+    pythonSelector.classList.remove('selectedLanguage');
+    javaSelector.classList.remove('selectedLanguage');
+    cSharpSelector.classList.remove('selectedLanguage');
+    cppSelector.classList.add('selectedLanguage');
+}
+
 
 const textwpmElement = document.getElementById('wpmText');
 const typingText = document.getElementById('typingText');
@@ -46,6 +92,8 @@ const generateInputs = () => {
             } else if(textToType[i+1] == 't') {
                 inputs.push('Tab');
                 i++;
+            } else {
+                inputs.push(textToType[i]);
             }
         } else {
             inputs.push(textToType[i]);
@@ -224,6 +272,8 @@ const resetTypingTest = () => {
         typingText.removeChild(typingText.firstChild);
     }
 
+    clearInterval(blinkInterval);
+    clearInterval(updateLoop);
     setInterval(updateLoop,1000/5);
     blinkInterval = setInterval(blinkCursor,1000/2);
     writeText();

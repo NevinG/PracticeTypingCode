@@ -1,1 +1,1 @@
-if x < 0:_n_tx = 0_n_tprint('Negative changed to zero')_nelif x == 0:_n_tprint('Zero')_nelif x == 1:_n_tprint('Single')_nelse:_n_tprint('More')
+class Mapping:_n_tdef __init__(self, iterable):_n_t_tself.items_list = []_n_t_tself.__update(iterable)_n_n_tdef update(self, iterable):_n_t_tfor item in iterable:_n_t_t_tself.items_list.append(item)
